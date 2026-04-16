@@ -10,7 +10,9 @@ if (!timescales.includes(timescale)) {
     timescale = "week";
 }
 
-const timezone = (Astro.locals.runtime.cf?.timezone as string) ?? "UTC";
+const timezone =
+    Astro.request.headers.get("x-vercel-ip-timezone") ??
+    ((Astro.locals.runtime as { cf?: { timezone?: string } } | undefined)?.cf?.timezone ?? "UTC");
 ---
 
 <html lang="en">
